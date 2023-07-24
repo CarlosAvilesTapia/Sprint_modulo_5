@@ -3,6 +3,7 @@ package cl.cat2814.sprintmodulo5
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import cl.cat2814.sprintmodulo5.ShoesInventory.Companion.getPriceFormat
 import cl.cat2814.sprintmodulo5.databinding.ItemShoesBinding
 import coil.load
 
@@ -19,6 +20,7 @@ class ShoesAdapter : RecyclerView.Adapter<ShoesAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ShoesAdapter.ViewHolder, position: Int) {
         val itemShoes = shoes[position]
         holder.bind(itemShoes)
+
     }
 
     override fun getItemCount(): Int {
@@ -35,7 +37,7 @@ class ShoesAdapter : RecyclerView.Adapter<ShoesAdapter.ViewHolder>() {
 
             binding.ivShoeItem.load(itemShoes.imgUrl)
             binding.tvShoeName.text = itemShoes.name
-            binding.tvShoePrice.text = itemShoes.price.toString()
+            binding.tvShoePrice.text = getPriceFormat(itemShoes.price)
 
         }
     }

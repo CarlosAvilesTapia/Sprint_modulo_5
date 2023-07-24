@@ -1,5 +1,8 @@
 package cl.cat2814.sprintmodulo5
 
+import android.icu.text.NumberFormat
+import java.util.Locale
+
 data class Shoes(
     val name: String,
     val price: Int,
@@ -22,6 +25,11 @@ class ShoesInventory {
             shoesInventory.add(Shoes("Nike 'Back to the future'", 200000,"https://o.aolcdn.com/hss/storage/midas/f47e67f6910889f436f2a0a2242e1134/202841652/nikemags2015.png.cf.jpg"))
 
             return shoesInventory
+        }
+
+        fun getPriceFormat(price: Int): String {
+            val currency: NumberFormat = NumberFormat.getCurrencyInstance(Locale("es", "CL"))
+            return currency.format(price)
         }
     }
 }
