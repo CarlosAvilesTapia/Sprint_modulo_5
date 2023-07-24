@@ -1,7 +1,10 @@
 package cl.cat2814.sprintmodulo5
 
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import cl.cat2814.sprintmodulo5.ShoesInventory.Companion.getPriceFormat
 import cl.cat2814.sprintmodulo5.databinding.ItemShoesBinding
@@ -32,12 +35,40 @@ class ShoesAdapter : RecyclerView.Adapter<ShoesAdapter.ViewHolder>() {
 
     }
 
-    class ViewHolder(val binding: ItemShoesBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(val binding: ItemShoesBinding) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+
+
+
         fun bind(itemShoes: Shoes) {
 
             binding.ivShoeItem.load(itemShoes.imgUrl)
             binding.tvShoeName.text = itemShoes.name
             binding.tvShoePrice.text = getPriceFormat(itemShoes.price)
+
+            binding.cvShoeItem.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("Url", itemShoes.imgUrl)
+                bundle.putString("Name", itemShoes.name)
+                bundle.putString("Price", getPriceFormat(itemShoes.price))
+
+                Navigation.findNavController(binding.root).navigate(R.id.action_firstFragment_to_secondFragment, bundle)
+
+
+            }
+
+        }
+
+        override fun onClick(v: View?) {
+         /*   val position = layoutPosition.
+            val itemShoes = shoes[position]
+
+            val bundle = Bundle()
+            bundle.putString("Url", itemShoes.imgUrl)
+            bundle.putString("Name", itemShoes.name)
+            bundle.putString("Price", getPriceFormat(itemShoes.price))
+
+            Navigation.findNavController(binding.root).navigate(R.id.action_firstFragment_to_secondFragment, bundle)
+*/
 
         }
     }
