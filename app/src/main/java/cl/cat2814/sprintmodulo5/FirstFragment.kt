@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.GridLayoutManager
 import cl.cat2814.sprintmodulo5.databinding.ActivityMainBinding
 import cl.cat2814.sprintmodulo5.databinding.FragmentFirstBinding
 
@@ -38,6 +39,7 @@ class FirstFragment : Fragment() {
         shoesAdapter.setData(shoesInventory)
 
         binding.rvShoesList.adapter = shoesAdapter
+        binding.rvShoesList.layoutManager = GridLayoutManager(context,2)
     }
 /*
     companion object {
