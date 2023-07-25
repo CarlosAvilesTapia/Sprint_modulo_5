@@ -5,7 +5,7 @@ import java.util.Locale
 
 data class Shoes(
     val name: String,
-    val price: Int,
+    val price: Int?,
     val imgUrl: String
 )
 
@@ -27,7 +27,8 @@ class ShoesInventory {
             return shoesInventory
         }
 
-        fun getPriceFormat(price: Int): String {
+        // Creación de función para convertir Int en formato moneda.
+        fun getPriceFormat(price: Int?): String {
             val currency: NumberFormat = NumberFormat.getCurrencyInstance(Locale("es", "CL"))
             return currency.format(price)
         }

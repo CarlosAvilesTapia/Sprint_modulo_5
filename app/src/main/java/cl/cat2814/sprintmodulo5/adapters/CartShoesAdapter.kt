@@ -6,12 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import cl.cat2814.sprintmodulo5.Shoes
 import cl.cat2814.sprintmodulo5.ShoesInventory.Companion.getPriceFormat
 import cl.cat2814.sprintmodulo5.databinding.ItemShoesCartBinding
-import cl.cat2814.sprintmodulo5.fragments.ThirdFragment
 import coil.load
 
-class CartShoesAdapter(shoesList: ThirdFragment) : RecyclerView.Adapter<CartShoesAdapter.ViewHolder>() {
+class CartShoesAdapter: RecyclerView.Adapter<CartShoesAdapter.ViewHolder>() {
 
     var cartShoes = mutableListOf<Shoes>()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartShoesAdapter.ViewHolder {
         val binding = ItemShoesCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -29,22 +29,19 @@ class CartShoesAdapter(shoesList: ThirdFragment) : RecyclerView.Adapter<CartShoe
 
     fun setData(shoesInventory: List<Shoes>) {
         cartShoes = shoesInventory.toMutableList()
-
     }
 
-    class ViewHolder(val binding: ItemShoesCartBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(val binding: ItemShoesCartBinding): RecyclerView.ViewHolder(binding.root) {
         fun bind(itemShoesCart: Shoes) {
 
-            binding.ivCartShoeItem.load(itemShoesCart.imgUrl)
             binding.tvCartShoeName.text = itemShoesCart.name
             binding.tvCartShoePrice.text = getPriceFormat(itemShoesCart.price)
+            binding.ivCartShoeItem.load(itemShoesCart.imgUrl)
 
             binding.btDeleteItem.setOnClickListener {
-                /*cartShoes.remove(itemShoesCart)
-                notifyDataSetChanged()*/
+                cartShoes.remove(itemShoesCart)
+                notifyDataSetChanged()
             }
-
         }
-
     }
 }

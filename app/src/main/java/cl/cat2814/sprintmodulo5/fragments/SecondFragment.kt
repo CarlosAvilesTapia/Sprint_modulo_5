@@ -18,39 +18,29 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "Url"
-private const val ARG_PARAM2 = "Name"
-private const val ARG_PARAM3 = "Price"
+// Parámetros para recibir datos del first fragment.
+private const val ARG_PARAM1 = "Name"
+private const val ARG_PARAM2 = "Price"
+private const val ARG_PARAM3 = "Url"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SecondFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SecondFragment : Fragment() {
 
-    lateinit var binding: FragmentSecondBinding
-    lateinit var mSharedPref: SharedPreferences
-    lateinit var gson: Gson
-    lateinit var shoesList: MutableList<Shoes>
-    val bundle = Bundle()
+    private lateinit var binding: FragmentSecondBinding
+    private lateinit var mSharedPref: SharedPreferences
+    private lateinit var gson: Gson
+    private lateinit var shoesList: MutableList<Shoes>
+    private val bundle = Bundle()
 
-
-
-
-    // TODO: Rename and change types of parameters
-    var param1: String = ""
-    var param2: String = ""
-    var param3: Int = 0 // Se cambia a Int
+    private var param1: String? = null
+    private var param2: Int? = 0 // Se cambia a Int
+    private var param3: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1).toString()
-            param2 = it.getString(ARG_PARAM2).toString()
-            param3 = it.getInt(ARG_PARAM3) // Se cambia a Int
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getInt(ARG_PARAM2)// Se cambia a Int
+            param3 = it.getString(ARG_PARAM3)
         }
     }
 
@@ -61,12 +51,11 @@ class SecondFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSecondBinding.inflate(layoutInflater, container, false)
 
-
-        binding.ivShoeDetail.load(param1)
-        binding.tvShoeNameDetail.text = param2
-
+        binding.tvShoeNameDetail.text = param1
         // Se aplica la función para formato de precio.
-        binding.tvShoePriceDetail.text = ShoesInventory.getPriceFormat(param3)
+        binding.tvShoePriceDetail.text = ShoesInventory.getPriceFormat(param2)
+        binding.ivShoeDetail.load(param3)
+
 
         mSharedPref = requireActivity().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
 
@@ -74,74 +63,47 @@ class SecondFragment : Fragment() {
 
         shoesList = getList()
 
+        initListeners()
+
+        return binding.root
+    }
+
+    private fun initListeners() {
+
         // Botón agregar al carrito.
         binding.btAddToCart.setOnClickListener {
 
-            // val imgUrl = binding.ivShoeDetail.load(param1).toString()
-            val imgUrl = param1
-
-            //val shoesName = binding.tvShoeNameDetail.text.toString()
-            val shoesName = param2
-
-            //val shoesPrice = binding.tvShoePriceDetail.text.toString().toInt()
-            val shoesPrice = param3
+            val shoesName = param1.toString()
+            val shoesPrice = param2.toString().toInt()
+            val imgUrl = param3.toString()
 
             // Llenado del listado.
-            val shoes = Shoes(imgUrl, shoesPrice, shoesName)
+            val shoes = Shoes(shoesName, shoesPrice, imgUrl)
             shoesList.add(shoes)
-
-
-            mSharedPref =requireContext().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
-            gson = Gson()
 
             val jsonString = gson.toJson(shoesList)
             mSharedPref.edit().putString("Shoes list", jsonString).apply()
 
-            Toast.makeText(requireContext(),"Producto agregado exitosamente?", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(),"Producto agregado exitosamente", Toast.LENGTH_SHORT).show()
 
         }
 
-
+        // Botón para volver al comienzo.
         binding.btBackToMain.setOnClickListener{
             view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.action_secondFragment_to_firstFragment) }
         }
 
-
+        // Botón para ir al carrito.
         binding.btGoToCart.setOnClickListener {
             Navigation.findNavController(binding.root)
-                    .navigate(R.id.action_secondFragment_to_thirdFragment, bundle)
+                .navigate(R.id.action_secondFragment_to_thirdFragment, bundle)
         }
-
-
-        return binding.root
-
     }
 
+    // Función que obtiene los elementos de la lista.
     private fun getList(): MutableList<Shoes> {
         val jsonString = mSharedPref.getString("Shoes list", null)
         val listType = object : TypeToken<MutableList<Shoes>>() {}.type
         return gson.fromJson(jsonString, listType) ?: mutableListOf()
-
-
-    }
-
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SecondFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SecondFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
     }
 }
