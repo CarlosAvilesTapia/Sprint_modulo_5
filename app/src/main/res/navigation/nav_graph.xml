@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/firstFragment"
-        android:name="cl.cat2814.sprintmodulo5.FirstFragment"
+        android:name="cl.cat2814.sprintmodulo5.fragments.FirstFragment"
         android:label="fragment_first"
         tools:layout="@layout/fragment_first" >
         <action
@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
-        android:name="cl.cat2814.sprintmodulo5.SecondFragment"
+        android:name="cl.cat2814.sprintmodulo5.fragments.SecondFragment"
         android:label="fragment_second"
         tools:layout="@layout/fragment_second" >
         <action
@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/thirdFragment"
-        android:name="cl.cat2814.sprintmodulo5.ThirdFragment"
+        android:name="cl.cat2814.sprintmodulo5.fragments.ThirdFragment"
         android:label="fragment_third"
         tools:layout="@layout/fragment_third" >
         <action

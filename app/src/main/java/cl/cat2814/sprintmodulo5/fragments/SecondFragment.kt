@@ -1,11 +1,14 @@
-package cl.cat2814.sprintmodulo5
+package cl.cat2814.sprintmodulo5.fragments
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import cl.cat2814.sprintmodulo5.R
 import cl.cat2814.sprintmodulo5.databinding.FragmentSecondBinding
 import coil.load
 
@@ -24,11 +27,12 @@ private const val ARG_PARAM3 = "Price"
 class SecondFragment : Fragment() {
 
     lateinit var binding: FragmentSecondBinding
+    lateinit var mSharedPref: SharedPreferences
 
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var param3: String? = null
+    var param1: String? = null
+    var param2: String? = null
+    var param3: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +49,24 @@ class SecondFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSecondBinding.inflate(layoutInflater, container, false)
+
+        mSharedPref = requireActivity().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
+
+        // Botón agregar al carrito.
+        binding.btAddToCart.setOnClickListener {
+            val imgUrl = binding.ivShoeDetail.load(param1).toString()
+            val shoeName = binding.tvShoeNameDetail.text.toString()
+            val shoePrice = binding.tvShoePriceDetail.text.toString()
+
+            mSharedPref.edit().putString("URL", imgUrl).apply()
+            mSharedPref.edit().putString("Name", shoeName).apply()
+            mSharedPref.edit().putString("Price", shoePrice).apply()
+
+
+        }
+
+
+
 
         binding.ivShoeDetail.load(param1)
         binding.tvShoeNameDetail.text = param2
@@ -71,6 +93,7 @@ class SecondFragment : Fragment() {
 
 
         return binding.root
+
     }
 
     companion object {

@@ -1,4 +1,4 @@
-package cl.cat2814.sprintmodulo5
+package cl.cat2814.sprintmodulo5.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import cl.cat2814.sprintmodulo5.databinding.FragmentSecondBinding
+import androidx.recyclerview.widget.LinearLayoutManager
+import cl.cat2814.sprintmodulo5.R
+import cl.cat2814.sprintmodulo5.ShoesInventory
+import cl.cat2814.sprintmodulo5.adapters.CartShoesAdapter
 import cl.cat2814.sprintmodulo5.databinding.FragmentThirdBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -42,11 +45,22 @@ class ThirdFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentThirdBinding.inflate(layoutInflater, container, false)
 
+        initCartShoesAdapter()
+
         binding.btMainFromCart.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_thirdFragment_to_firstFragment)
         }
 
         return binding.root
+    }
+
+    private fun initCartShoesAdapter() {
+        val cartShoesAdapter = CartShoesAdapter()
+        val shoesInventory = ShoesInventory.getShoesInventory()
+        cartShoesAdapter.setData(shoesInventory)
+
+        binding.rvCartShoesList.adapter = cartShoesAdapter
+        binding.rvCartShoesList.layoutManager = LinearLayoutManager(context)
     }
 
     companion object {
