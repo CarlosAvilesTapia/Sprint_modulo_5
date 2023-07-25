@@ -8,7 +8,7 @@
     tools:context=".fragments.FirstFragment" >
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/tbFirstFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -24,9 +24,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:text="Tip tap shoes"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/tbFirstFrag"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="@+id/tbFirstFrag" />
 
     <ImageButton
         android:id="@+id/btCart"
@@ -35,9 +35,9 @@
         android:layout_marginEnd="32dp"
         android:minHeight="48dp"
         android:src="@drawable/baseline_shopping_cart_24"
-        app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+        app:layout_constraintBottom_toBottomOf="@+id/tbFirstFrag"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/toolbar" />
+        app:layout_constraintTop_toTopOf="@+id/tbFirstFrag" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvShoesList"
@@ -47,7 +47,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintTop_toBottomOf="@+id/tbFirstFrag">
 
     </androidx.recyclerview.widget.RecyclerView>
 </androidx.constraintlayout.widget.ConstraintLayout>

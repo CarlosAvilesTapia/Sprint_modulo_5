@@ -8,7 +8,7 @@ import cl.cat2814.sprintmodulo5.ShoesInventory.Companion.getPriceFormat
 import cl.cat2814.sprintmodulo5.databinding.ItemShoesCartBinding
 import coil.load
 
-class CartShoesAdapter: RecyclerView.Adapter<CartShoesAdapter.ViewHolder>() {
+class CartShoesAdapter(shoesList: List<Shoes>) : RecyclerView.Adapter<CartShoesAdapter.ViewHolder>() {
 
     var cartShoes = mutableListOf<Shoes>()
 

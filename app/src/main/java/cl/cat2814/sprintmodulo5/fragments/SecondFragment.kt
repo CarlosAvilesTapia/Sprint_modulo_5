@@ -6,9 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import cl.cat2814.sprintmodulo5.R
+import cl.cat2814.sprintmodulo5.ShoesInventory
 import cl.cat2814.sprintmodulo5.databinding.FragmentSecondBinding
 import coil.load
 
@@ -32,14 +34,14 @@ class SecondFragment : Fragment() {
     // TODO: Rename and change types of parameters
     var param1: String? = null
     var param2: String? = null
-    var param3: String? = null
+    var param3: Int = 0 // Se cambia a Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-            param3 = it.getString(ARG_PARAM3)
+            param3 = it.getInt(ARG_PARAM3) // Se cambia a Int
         }
     }
 
@@ -50,46 +52,43 @@ class SecondFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentSecondBinding.inflate(layoutInflater, container, false)
 
+
+        binding.ivShoeDetail.load(param1)
+        binding.tvShoeNameDetail.text = param2
+
+        // Se aplica la función para formato de precio.
+        binding.tvShoePriceDetail.text = ShoesInventory.getPriceFormat(param3)
+
         mSharedPref = requireActivity().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
 
         // Botón agregar al carrito.
         binding.btAddToCart.setOnClickListener {
-            val imgUrl = binding.ivShoeDetail.load(param1).toString()
-            val shoeName = binding.tvShoeNameDetail.text.toString()
-            val shoePrice = binding.tvShoePriceDetail.text.toString()
+           // val imgUrl = binding.ivShoeDetail.load(param1).toString()
+            val imgUrl = param1
+
+            //val shoesName = binding.tvShoeNameDetail.text.toString()
+            val shoesName = param2
+
+            //val shoesPrice = binding.tvShoePriceDetail.text.toString().toInt()
+            val shoesPrice = param3
 
             mSharedPref.edit().putString("URL", imgUrl).apply()
-            mSharedPref.edit().putString("Name", shoeName).apply()
-            mSharedPref.edit().putString("Price", shoePrice).apply()
+            mSharedPref.edit().putString("Name", shoesName).apply()
+            mSharedPref.edit().putInt("Price", shoesPrice).apply()
+
+            Toast.makeText(requireContext(),"Producto agregado exitosamente?", Toast.LENGTH_SHORT).show()
 
 
         }
-
-
-
-
-        binding.ivShoeDetail.load(param1)
-        binding.tvShoeNameDetail.text = param2
-        binding.tvShoePriceDetail.text = param3
 
         binding.btBackToMain.setOnClickListener{
             view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.action_secondFragment_to_firstFragment) }
         }
 
-
-        /*binding.ivShoeItem.load(itemShoes.imgUrl)
-            binding.tvShoeName.text = itemShoes.name
-            binding.tvShoePrice.text = getPriceFormat(itemShoes.price)*/
-
-        /* Glide.with(getContext()).load(mParam1).into(binding.ivDetail);
-
-        // binding del text view enviado desde el fragment anterior.
-        binding.tvDetail.setText(mParam2);
-
-        // Asignación del botón para volver al listado principal.
-        binding.backButton.setOnClickListener(v ->
-                Navigation.findNavController(getView()).
-                navigate(R.id.action_secondFragment_to_firstFragment));*/
+        binding.btGoToCart.setOnClickListener {
+            Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_secondFragment_to_thirdFragment)
+        }
 
 
         return binding.root

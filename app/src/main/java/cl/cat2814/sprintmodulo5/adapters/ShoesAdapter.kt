@@ -45,7 +45,7 @@ class ShoesAdapter : RecyclerView.Adapter<ShoesAdapter.ViewHolder>() {
                 val bundle = Bundle()
                 bundle.putString("Url", itemShoes.imgUrl)
                 bundle.putString("Name", itemShoes.name)
-                bundle.putString("Price", getPriceFormat(itemShoes.price))
+                bundle.putInt("Price", itemShoes.price) // Cambio de string a int.
 
                 Navigation.findNavController(binding.root)
                     .navigate(R.id.action_firstFragment_to_secondFragment, bundle)
