@@ -1,10 +1,13 @@
 package cl.cat2814.sprintmodulo5
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
+import cl.cat2814.sprintmodulo5.databinding.FragmentSecondBinding
+import cl.cat2814.sprintmodulo5.databinding.FragmentThirdBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,6 +20,9 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class ThirdFragment : Fragment() {
+
+    lateinit var binding: FragmentThirdBinding
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -34,7 +40,13 @@ class ThirdFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_third, container, false)
+        binding = FragmentThirdBinding.inflate(layoutInflater, container, false)
+
+        binding.btMainFromCart.setOnClickListener {
+            Navigation.findNavController(binding.root).navigate(R.id.action_thirdFragment_to_firstFragment)
+        }
+
+        return binding.root
     }
 
     companion object {

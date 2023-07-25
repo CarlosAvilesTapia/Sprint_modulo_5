@@ -51,10 +51,11 @@ class ShoesAdapter : RecyclerView.Adapter<ShoesAdapter.ViewHolder>() {
                 bundle.putString("Name", itemShoes.name)
                 bundle.putString("Price", getPriceFormat(itemShoes.price))
 
-                Navigation.findNavController(binding.root).navigate(R.id.action_firstFragment_to_secondFragment, bundle)
-
-
+                Navigation.findNavController(binding.root)
+                    .navigate(R.id.action_firstFragment_to_secondFragment, bundle)
             }
+
+
 
         }
 

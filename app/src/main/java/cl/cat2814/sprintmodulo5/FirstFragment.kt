@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import cl.cat2814.sprintmodulo5.databinding.ActivityMainBinding
 import cl.cat2814.sprintmodulo5.databinding.FragmentFirstBinding
@@ -28,9 +29,18 @@ class FirstFragment : Fragment() {
 
         initShoesAdapter()
 
+        initListeners()
+
         // Inflate the layout for this fragment
         return binding.root
 
+    }
+
+    private fun initListeners() {
+        binding.btCart.setOnClickListener {
+            Navigation.findNavController(binding.root)
+                .navigate(R.id.action_firstFragment_to_thirdFragment)
+        }
     }
 
     private fun initShoesAdapter() {
