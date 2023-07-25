@@ -10,9 +10,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import cl.cat2814.sprintmodulo5.R
+import cl.cat2814.sprintmodulo5.Shoes
 import cl.cat2814.sprintmodulo5.ShoesInventory
 import cl.cat2814.sprintmodulo5.databinding.FragmentSecondBinding
 import coil.load
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -30,17 +33,23 @@ class SecondFragment : Fragment() {
 
     lateinit var binding: FragmentSecondBinding
     lateinit var mSharedPref: SharedPreferences
+    lateinit var gson: Gson
+    lateinit var shoesList: MutableList<Shoes>
+    val bundle = Bundle()
+
+
+
 
     // TODO: Rename and change types of parameters
-    var param1: String? = null
-    var param2: String? = null
+    var param1: String = ""
+    var param2: String = ""
     var param3: Int = 0 // Se cambia a Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            param1 = it.getString(ARG_PARAM1).toString()
+            param2 = it.getString(ARG_PARAM2).toString()
             param3 = it.getInt(ARG_PARAM3) // Se cambia a Int
         }
     }
@@ -61,9 +70,14 @@ class SecondFragment : Fragment() {
 
         mSharedPref = requireActivity().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
 
+        gson = Gson()
+
+        shoesList = getList()
+
         // Botón agregar al carrito.
         binding.btAddToCart.setOnClickListener {
-           // val imgUrl = binding.ivShoeDetail.load(param1).toString()
+
+            // val imgUrl = binding.ivShoeDetail.load(param1).toString()
             val imgUrl = param1
 
             //val shoesName = binding.tvShoeNameDetail.text.toString()
@@ -72,26 +86,42 @@ class SecondFragment : Fragment() {
             //val shoesPrice = binding.tvShoePriceDetail.text.toString().toInt()
             val shoesPrice = param3
 
-            mSharedPref.edit().putString("URL", imgUrl).apply()
-            mSharedPref.edit().putString("Name", shoesName).apply()
-            mSharedPref.edit().putInt("Price", shoesPrice).apply()
+            // Llenado del listado.
+            val shoes = Shoes(imgUrl, shoesPrice, shoesName)
+            shoesList.add(shoes)
+
+
+            mSharedPref =requireContext().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
+            gson = Gson()
+
+            val jsonString = gson.toJson(shoesList)
+            mSharedPref.edit().putString("Shoes list", jsonString).apply()
 
             Toast.makeText(requireContext(),"Producto agregado exitosamente?", Toast.LENGTH_SHORT).show()
 
-
         }
+
 
         binding.btBackToMain.setOnClickListener{
             view?.let { it1 -> Navigation.findNavController(it1).navigate(R.id.action_secondFragment_to_firstFragment) }
         }
 
+
         binding.btGoToCart.setOnClickListener {
             Navigation.findNavController(binding.root)
-                    .navigate(R.id.action_secondFragment_to_thirdFragment)
+                    .navigate(R.id.action_secondFragment_to_thirdFragment, bundle)
         }
 
 
         return binding.root
+
+    }
+
+    private fun getList(): MutableList<Shoes> {
+        val jsonString = mSharedPref.getString("Shoes list", null)
+        val listType = object : TypeToken<MutableList<Shoes>>() {}.type
+        return gson.fromJson(jsonString, listType) ?: mutableListOf()
+
 
     }
 

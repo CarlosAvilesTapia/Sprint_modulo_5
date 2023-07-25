@@ -6,15 +6,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import cl.cat2814.sprintmodulo5.R
 import cl.cat2814.sprintmodulo5.Shoes
-import cl.cat2814.sprintmodulo5.ShoesInventory
 import cl.cat2814.sprintmodulo5.adapters.CartShoesAdapter
 import cl.cat2814.sprintmodulo5.databinding.FragmentThirdBinding
 import cl.cat2814.sprintmodulo5.databinding.ItemShoesCartBinding
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,8 +31,9 @@ private const val ARG_PARAM2 = "param2"
 class ThirdFragment : Fragment() {
 
     lateinit var binding: FragmentThirdBinding
-    lateinit var itemBinding: ItemShoesCartBinding
     lateinit var mSharedPref: SharedPreferences
+    lateinit var gson: Gson
+    lateinit var itemBinding: ItemShoesCartBinding
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -52,22 +55,28 @@ class ThirdFragment : Fragment() {
         binding = FragmentThirdBinding.inflate(layoutInflater, container, false)
         itemBinding = ItemShoesCartBinding.inflate(layoutInflater, container, false)
 
-        // Lectura de las preferencias del segundo fragmento
-        mSharedPref = requireContext().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
-        val shoeName = mSharedPref.getString("Name","").toString()
-        val shoePrice = mSharedPref.getInt("Price",0)
-        val imgUrl = mSharedPref.getString("URL", "").toString()
+        mSharedPref = requireActivity().getSharedPreferences("ShoesPreferences", Context.MODE_PRIVATE)
+
+        gson = Gson()
+
+        var shoesList: MutableList<Shoes> = getList()
+
+        val cartShoesAdapter = CartShoesAdapter(this)
+
+        cartShoesAdapter.setData(shoesList)
+        binding.rvCartShoesList.adapter = cartShoesAdapter
+        binding.rvCartShoesList.layoutManager = LinearLayoutManager(requireContext())
+
+        binding.btDeleteCart.setOnClickListener {
+            mSharedPref.edit().clear().apply()
+            binding.rvCartShoesList.visibility = View.GONE
+            binding.btDeleteCart.visibility = View.GONE
+
+            Toast.makeText(requireContext(), "Productos eliminados exitosamente.", Toast.LENGTH_SHORT).show()
+
+        }
 
 
-        // Instancia de la clase Shoes
-        val shoes = Shoes(shoeName, shoePrice, imgUrl)
-
-        // Lista con los elementos guardados
-        val shoesList = ArrayList<Shoes>()
-        shoesList.add(shoes)
-
-
-        initCartShoesAdapter(shoesList)
 
         binding.btMainFromCart.setOnClickListener {
             Navigation.findNavController(binding.root).navigate(R.id.action_thirdFragment_to_firstFragment)
@@ -76,12 +85,19 @@ class ThirdFragment : Fragment() {
         return binding.root
     }
 
-    private fun initCartShoesAdapter(shoesList: List<Shoes>) {
+    private fun getList(): MutableList<Shoes> {
+        val jsonString = mSharedPref.getString("Shoes list", null)
+        val listType = object : TypeToken<MutableList<Shoes>>() {}.type
+        return gson.fromJson(jsonString, listType) ?: mutableListOf()
+
+    }
+
+   /* private fun initCartShoesAdapter(shoesList: List<Shoes>) {
         val cartShoesAdapter = CartShoesAdapter(shoesList)
 
         binding.rvCartShoesList.adapter = cartShoesAdapter
         binding.rvCartShoesList.layoutManager = LinearLayoutManager(requireContext())
-    }
+    }*/
 
     companion object {
         /**

@@ -6,9 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import cl.cat2814.sprintmodulo5.Shoes
 import cl.cat2814.sprintmodulo5.ShoesInventory.Companion.getPriceFormat
 import cl.cat2814.sprintmodulo5.databinding.ItemShoesCartBinding
+import cl.cat2814.sprintmodulo5.fragments.ThirdFragment
 import coil.load
 
-class CartShoesAdapter(shoesList: List<Shoes>) : RecyclerView.Adapter<CartShoesAdapter.ViewHolder>() {
+class CartShoesAdapter(shoesList: ThirdFragment) : RecyclerView.Adapter<CartShoesAdapter.ViewHolder>() {
 
     var cartShoes = mutableListOf<Shoes>()
 
@@ -27,7 +28,7 @@ class CartShoesAdapter(shoesList: List<Shoes>) : RecyclerView.Adapter<CartShoesA
     }
 
     fun setData(shoesInventory: List<Shoes>) {
-        this.cartShoes = shoesInventory.toMutableList()
+        cartShoes = shoesInventory.toMutableList()
 
     }
 
