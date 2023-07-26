@@ -5,6 +5,7 @@
     android:id="@+id/clThirdFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".fragments.ThirdFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Total:"
+                android:text="@string/total"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:text="$0"
+                android:text="@string/_0"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -66,12 +67,14 @@
 
     <Button
         android:id="@+id/btDeleteCart"
+        style="@style/bt_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Vaciar carrito"
+        android:text="@string/vaciar_carrito"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btMainFromCart"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -83,7 +86,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Seguir comprando"
+        android:backgroundTint="#B7A7AE"
+        android:text="@string/seguir_comprando2"
+        app:cornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

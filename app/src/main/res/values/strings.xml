@@ -2,4 +2,12 @@
     <string name="app_name">Sprint modulo 5</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textview">TextView</string>
+    <string name="agregar_al_carrito">Agregar al carrito</string>
+    <string name="seguir_comprando">Seguir comprando</string>
+    <string name="tip_tap_shoes">Tip tap shoes</string>
+    <string name="total">Total:</string>
+    <string name="_0">$0</string>
+    <string name="vaciar_carrito">Vaciar carrito</string>
+    <string name="seguir_comprando2">Seguir comprando</string>
 </resources>

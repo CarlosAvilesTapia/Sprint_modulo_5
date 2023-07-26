@@ -38,7 +38,7 @@ class CartShoesAdapter: RecyclerView.Adapter<CartShoesAdapter.ViewHolder>() {
             binding.tvCartShoePrice.text = getPriceFormat(itemShoesCart.price)
             binding.ivCartShoeItem.load(itemShoesCart.imgUrl)
 
-            binding.btDeleteItem.setOnClickListener {
+            binding.ibtDeleteItem.setOnClickListener {
                 cartShoes.remove(itemShoesCart)
                 notifyDataSetChanged()
             }

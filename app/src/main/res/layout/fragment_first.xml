@@ -5,13 +5,14 @@
     android:id="@+id/clFirstFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FirstFragment" >
+    android:background="@drawable/gradient_background"
+    tools:context=".fragments.FirstFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/tbFirstFrag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#1C252C"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,7 +24,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="Tip tap shoes"
+        android:text="@string/tip_tap_shoes"
+        android:textColor="#78909C"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/tbFirstFrag"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/tbFirstFrag" />

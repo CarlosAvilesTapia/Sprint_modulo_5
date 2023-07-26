@@ -5,6 +5,7 @@
     android:id="@+id/clSecondFrag"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
     tools:context=".fragments.SecondFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,7 +13,7 @@
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#1C252C"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="TextView"
+                android:text="@string/textview"
                 android:textSize="48sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -87,10 +88,10 @@
 
             <Button
                 android:id="@+id/btAddToCart"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                style="@style/bt_style"
                 android:layout_marginBottom="8dp"
-                android:text="Agregar al carrito"
+                android:text="@string/agregar_al_carrito"
+                app:cornerRadius="10dp"
                 app:layout_constraintBottom_toTopOf="@+id/btBackToMain"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -101,7 +102,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
-                android:text="Seguir comprando"
+                android:backgroundTint="#B7A7AE"
+                android:text="@string/seguir_comprando"
+                app:cornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
